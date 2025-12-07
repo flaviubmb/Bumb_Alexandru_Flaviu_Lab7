@@ -27,6 +27,54 @@ namespace BumbAlexandruFlaviuLab7
             await App.Database.DeleteShopListAsync(slist);
             await Navigation.PopAsync();
         }
+
+        private async void OnDeleteItemButtonClicked(object sender, EventArgs e)
+        {
+        
+            var selectedProduct = listView.SelectedItem as Product;
+            if (selectedProduct != null)
+            {
+           
+                await App.Database.DeleteProductAsync(selectedProduct);
+
+               
+                var shopl = BindingContext as ShopList;
+                if (shopl != null)
+                {
+                    listView.ItemsSource = await App.Database.GetListProductsAsync(shopl.ID);
+                }
+            }
+            else
+            {
+                await DisplayAlert("Attention",
+                     "Please select a product before deleting.",
+                     "OK");
+
+            }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var shopl = BindingContext as ShopList;
+            if (shopl != null)
+            {
+                listView.ItemsSource = await App.Database.GetListProductsAsync(shopl.ID);
+            }
+        }
+
+        private async void OnChooseButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(
+                new ProductPage((ShopList)this.BindingContext)
+                {
+                    BindingContext = new Product()
+                }
+            );
+        }
+
+
     }
 
 

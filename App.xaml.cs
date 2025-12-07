@@ -6,10 +6,10 @@ namespace BumbAlexandruFlaviuLab7
 {
     public partial class App : Application
     {
-        static ShoppingListDatabase database;
+        static ShopListDatabase database;
 
 
-    public static ShoppingListDatabase Database
+    public static ShopListDatabase Database
         {
             get
             {
@@ -19,7 +19,7 @@ namespace BumbAlexandruFlaviuLab7
                         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                         "ShoppingList.db3"
                     );
-                    database = new ShoppingListDatabase(dbPath);
+                    database = new ShopListDatabase(dbPath);
                 }
                 return database;
             }
